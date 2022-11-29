@@ -40,7 +40,7 @@ export default class ListTemplate implements DOMList {
 
             const label = document.createElement("label") as HTMLLabelElement
             label.htmlFor = item.id
-            label.textContent = item.item
+            label.textContent = (item.item).toString()
             li.append(label)
 
             const button = document.createElement("button") as HTMLButtonElement
