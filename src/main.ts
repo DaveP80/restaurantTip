@@ -7,9 +7,33 @@ const initApp = (): void => {
     const fullList = FullList.instance
     const template = ListTemplate.instance
 
+    class Signature {
+        dl: HTMLElement
+
+        static instance: Signature = new Signature()
+
+        constructor() {
+            this.dl = document.getElementById("signoff") as HTMLElement
+        }
+
+        clear(): void {
+            this.dl.innerHTML = ''
+        }
+
+        render(): void {
+            const signature = document.createElement("dt") as HTMLDListElement
+            signature.className = "credit"
+            signature.textContent = "dev; dave p"
+            this.dl.append(signature)
+        }
+
+       
+    }
+
     const itemEntryForm = document.getElementById("itemEntryForm") as HTMLFormElement
     itemEntryForm.addEventListener("submit", (event: SubmitEvent): void => {
         event.preventDefault()
+        
         const input = document.getElementById("newItem") as HTMLInputElement
         const newEntryNum: number | null = parseFloat(input.value.trim())
         if (!newEntryNum) return
@@ -55,7 +79,20 @@ const initApp = (): void => {
     navigate.addEventListener('click', (): void => {
         fullList.clearList()
         template.clear()
-        template.render()
+
+        const signature = Signature.instance
+        signature.render()
+        const clearItems = document.getElementById("clearItemsButton") as
+            HTMLButtonElement
+
+        clearItems.addEventListener('click', (): void => {
+            signature.clear()
+        })
+
+        const controlInput = document.getElementById("itemEntryForm") as HTMLFormElement
+        controlInput.addEventListener("submit", (): void => {
+            signature.clear()
+        })
     })
 
     fullList.load()
