@@ -49,6 +49,15 @@ const initApp = (): void => {
         template.clear()
     })
 
+    const navigate = document.getElementById("gotosrc") as
+        HTMLButtonElement
+
+    navigate.addEventListener('click', (): void => {
+        fullList.clearList()
+        template.clear()
+        template.render()
+    })
+
     fullList.load()
     template.render(fullList)
 }
